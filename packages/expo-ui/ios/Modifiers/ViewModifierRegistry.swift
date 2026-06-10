@@ -1912,6 +1912,10 @@ extension ViewModifierRegistry {
       return try WidgetURLModifier(from: params, appContext: appContext)
     }
 
+    register("activityBackgroundTint") { params, appContext, _ in
+      return try ActivityBackgroundTintModifier(from: params, appContext: appContext)
+    }
+
     register("keyboardType") { params, appContext, _ in
       return try KeyboardTypeModifier(from: params, appContext: appContext)
     }

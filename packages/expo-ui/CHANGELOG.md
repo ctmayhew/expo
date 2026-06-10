@@ -8,6 +8,7 @@
 
 ### 🎉 New features
 
+- [iOS] Added the SwiftUI `activityBackgroundTint` modifier for setting Live Activity background. ([#46756](https://github.com/expo/expo/pull/46756) by [@jakex7](https://github.com/jakex7))
 - [jetpack-compose] Added `onGloballyPositioned` modifier, which reports a composable's window position and size. ([#46744](https://github.com/expo/expo/pull/46744) by [@nishan](https://github.com/intergalacticspacehighway))
 - [iOS] Extended the SwiftUI `onGeometryChange` modifier to also report the view's global position (`x`/`y`) alongside its size. ([#46744](https://github.com/expo/expo/pull/46744) by [@nishan](https://github.com/intergalacticspacehighway))
 - [iOS] Added the SwiftUI `minimumScaleFactor` modifier to let text shrink down to a given fraction of its size before truncating. ([#46740](https://github.com/expo/expo/pull/46740) by [@nishan](https://github.com/intergalacticspacehighway))
