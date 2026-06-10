@@ -80,12 +80,12 @@ export default function Layout() {
 
 ### What `NavigatorContent` receives
 
-| Property      | Description                                                                                                                          |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `state`       | The current navigation state: `{ index, routes }`, where each route has a `key`, `name`, `params`, and a deep-linkable `href`.        |
+| Property      | Description                                                                                                                            |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `state`       | The current navigation state: `{ index, routes }`, where each route has a `key`, `name`, `params`, and a deep-linkable `href`.         |
 | `descriptors` | A map keyed by `route.key`. Each descriptor exposes the screen's resolved `options` and a `render()` function that renders the screen. |
-| `actions`     | Functions to change the navigation state: `navigate(name, params?)` and `back()`.                                                     |
-| `emitter`     | An `emit()` function for dispatching events to screens.                                                                              |
+| `actions`     | Functions to change the navigation state: `navigate(name, params?)` and `back()`.                                                      |
+| `emitter`     | An `emit()` function for dispatching events to screens.                                                                                |
 
 ### Options
 
