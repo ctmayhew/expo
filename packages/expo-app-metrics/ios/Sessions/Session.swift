@@ -1,27 +1,17 @@
 import Foundation
 
-/**
- Session is a time frame during the app's lifetime that tracks various metrics from its start till its end.
- */
+/// Session is a time frame during the app's lifetime that tracks various metrics from its start till its end.
 public class Session: MetricsReceiver, @unchecked Sendable {
-  /**
-   Unique ID of the session in UUID v4 format.
-   */
+  /// Unique ID of the session in UUID v4 format.
   public let id: String
 
-  /**
-   Type of the session. It is one of: `main`, `foreground`, `screen`, `custom` or `unknown`.
-   */
+  /// Type of the session. It is one of: `main`, `foreground`, `screen`, `custom` or `unknown`.
   public let type: SessionType
 
-  /**
-   Date on which the session was created and started.
-   */
+  /// Date on which the session was created and started.
   public let startDate: Date
 
-  /**
-   Date on which the `stop()` function was called to end the session, or `nil` if the session is still active.
-   */
+  /// Date on which the `stop()` function was called to end the session, or `nil` if the session is still active.
   private(set) var endDate: Date?
 
   init(type: SessionType = .custom) {
@@ -46,11 +36,9 @@ public class Session: MetricsReceiver, @unchecked Sendable {
     }
   }
 
-  /**
-   Non-registering initializer that builds a session with explicit values.
-   The caller is responsible for adding it to storage (or skipping that step,
-   e.g. in tests).
-   */
+  /// Non-registering initializer that builds a session with explicit values.
+  /// The caller is responsible for adding it to storage (or skipping that step,
+  /// e.g. in tests).
   init(id: String, type: SessionType, startDate: Date, endDate: Date?) {
     self.id = id
     self.type = type
@@ -58,24 +46,18 @@ public class Session: MetricsReceiver, @unchecked Sendable {
     self.endDate = endDate
   }
 
-  /**
-   Whether the session is still running, i.e. did not end yet.
-   */
+  /// Whether the session is still running, i.e. did not end yet.
   var isActive: Bool {
     return endDate == nil
   }
 
-  /**
-   Session's duration in seconds since its start to an end, or until now if the session is still active.
-   */
+  /// Session's duration in seconds since its start to an end, or until now if the session is still active.
   var duration: TimeInterval {
     let endDate = self.endDate ?? Date.now
     return endDate.timeIntervalSince(startDate)
   }
 
-  /**
-   Stops the session, persists its end timestamp, and writes a final duration metric.
-   */
+  /// Stops the session, persists its end timestamp, and writes a final duration metric.
   func stop() {
     if endDate != nil {
       // Can't stop session more than once
@@ -129,7 +111,9 @@ public class Session: MetricsReceiver, @unchecked Sendable {
     do {
       try AppMetrics.database?.insert(metric: MetricRow.from(metric: metric, sessionId: self.id))
     } catch {
-      logger.warn("[AppMetrics] Failed to insert metric \"\(metric.getMetricKey())\" for session \(self.id): \(error.localizedDescription)")
+      logger.warn(
+        "[AppMetrics] Failed to insert metric \"\(metric.getMetricKey())\" for session \(self.id): \(error.localizedDescription)"
+      )
     }
   }
 
@@ -138,7 +122,8 @@ public class Session: MetricsReceiver, @unchecked Sendable {
     do {
       try AppMetrics.database?.insert(log: LogRow.from(log: log, sessionId: self.id))
     } catch {
-      logger.warn("[AppMetrics] Failed to insert log \"\(log.name)\" for session \(self.id): \(error.localizedDescription)")
+      logger.warn(
+        "[AppMetrics] Failed to insert log \"\(log.name)\" for session \(self.id): \(error.localizedDescription)")
     }
   }
 }

@@ -3,20 +3,20 @@
 import ExpoModulesCore
 import Foundation
 
-/** Event names emitted by `NetworkRequestObserver`, matching the keys in the JS
- `NetworkRequestObserverEvents` type. */
+/// Event names emitted by `NetworkRequestObserver`, matching the keys in the JS
+/// `NetworkRequestObserverEvents` type.
+// swift-format-ignore: AlwaysUseLowerCamelCase
 let REQUEST_STARTED_EVENT = "requestStarted"
+// swift-format-ignore: AlwaysUseLowerCamelCase
 let REQUEST_COMPLETED_EVENT = "requestCompleted"
 
-/**
- JS-facing `SharedObject` that bridges per-instance subscriptions to the singleton
- `NetworkRequestMonitor`. Each JS `new NetworkRequestObserver()` allocates one of these and
- registers it as a delegate; the native instance is released when JS drops the reference, at
- which point `sharedObjectWillRelease` removes the delegate registration.
-
- The class only forwards events — it doesn't store request history. Use `NetworkRequestMonitor`'s
- in-process API for that.
- */
+/// JS-facing `SharedObject` that bridges per-instance subscriptions to the singleton
+/// `NetworkRequestMonitor`. Each JS `new NetworkRequestObserver()` allocates one of these and
+/// registers it as a delegate; the native instance is released when JS drops the reference, at
+/// which point `sharedObjectWillRelease` removes the delegate registration.
+///
+/// The class only forwards events — it doesn't store request history. Use `NetworkRequestMonitor`'s
+/// in-process API for that.
 public final class NetworkRequestObserver: SharedObject, NetworkRequestObserverDelegate, @unchecked Sendable {
   public override init() {
     super.init()
@@ -50,15 +50,15 @@ public final class NetworkRequestObserver: SharedObject, NetworkRequestObserverD
     emit(event: REQUEST_COMPLETED_EVENT, payload: NetworkRequestObserver.completedPayload(for: request))
   }
 
-  /** Internal so tests can assert the payload shape without going through `emit`, which needs a
-   live JS runtime. The keys here are part of the public JS contract — additions are safe but
-   renames are breaking. */
+  /// Internal so tests can assert the payload shape without going through `emit`, which needs a
+  /// live JS runtime. The keys here are part of the public JS contract — additions are safe but
+  /// renames are breaking.
   static func startedPayload(for request: NetworkRequestStarted) -> [String: Any?] {
     return [
       "id": request.id.uuidString,
       "url": request.url.absoluteString,
       "method": request.method,
-      "startedAt": request.startedAt.ISO8601Format()
+      "startedAt": request.startedAt.ISO8601Format(),
     ]
   }
 
@@ -79,9 +79,9 @@ public final class NetworkRequestObserver: SharedObject, NetworkRequestObserverD
         return [
           "fromUrl": $0.fromUrl.absoluteString,
           "toUrl": $0.toUrl.absoluteString,
-          "statusCode": $0.statusCode
+          "statusCode": $0.statusCode,
         ]
-      }
+      },
     ]
   }
 }

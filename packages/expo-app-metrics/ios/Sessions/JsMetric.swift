@@ -2,9 +2,7 @@
 
 import ExpoModulesCore
 
-/**
- JS-facing shape of a metric attached to a session.
- */
+/// JS-facing shape of a metric attached to a session.
 struct JsMetric: Record {
   @Field var sessionId: String = ""
   @Field var category: String = ""
